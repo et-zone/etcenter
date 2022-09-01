@@ -156,7 +156,7 @@ func (m *Worker) SyncWatch(taskRun,taskStop func()) {
 				}
 				if ok {
 					taskRun()
-					log.Println("register succ!")
+					log.Println(fmt.Sprintf("register succ! key = %v ,val = %v",m.Key,m.Val))
 				} else {
 					log.Println("registering...")
 				}
