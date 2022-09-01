@@ -25,19 +25,19 @@ type Worker struct {
 	ready bool
 }
 
-//  heartTime ,expiration ( second) & heartTime < expiration
-func NewWorker(ctx context.Context, cli *Client, key string, heartTime, expiration int) (*Worker, error) {
-	if heartTime <= 0 || expiration <= 0 || heartTime >= expiration {
+//   0 < heartTimeSec < expireSec
+func NewWorker(ctx context.Context, cli *Client, key string, heartTimeSec, expireSec int) (*Worker, error) {
+	if heartTimeSec <= 0 || expireSec <= 0 || heartTimeSec >= expireSec {
 		return nil, errors.New("args: 0 < heartTime < expiration ")
 	}
 	m := &Worker{
 		sync.Mutex{},
 		cli,
-		heartTime,
-		expiration,
+		heartTimeSec,
+		expireSec,
 		key,
 		fmt.Sprintf("%v%v%v", time.Now().Unix(), os.Getgid(), os.Getpid()),
-		time.NewTicker(time.Duration(heartTime) * time.Second),
+		time.NewTicker(time.Duration(heartTimeSec) * time.Second),
 		ctx,
 		false,
 	}
