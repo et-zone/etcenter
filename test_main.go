@@ -13,5 +13,5 @@ func testMain(t testing.T){
 		DB:       1,  // use default DB
 	}))
 	w,_:= NewWorker(context.TODO(),cli,"vvvv5vvvv",3,10)
-	w.SyncWatch()
+	w.SyncWatch(func() {}, func() {})
 }
